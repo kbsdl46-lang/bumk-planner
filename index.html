@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summer Study Planner</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="beach-bg" aria-hidden="true">
+    <span class="float-item palm">🌴</span>
+    <span class="float-item sun">☀️</span>
+    <span class="float-item melon">🍉</span>
+    <span class="float-item shell">🐚</span>
+  </div>
+
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Pastel Summer Planner</p>
+      <h1>🌴 Summer Study Planner 🍉</h1>
+      <p class="subtitle">오늘도 시원하게 집중하고, 공부 기록을 예쁘게 남겨보세요 🌊</p>
+    </div>
+    <div class="today-card">
+      <span id="todayText">오늘</span>
+      <strong id="studyStreak">0 Notes</strong>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="card timer-card">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">Focus Timer</p>
+          <h2>타이머</h2>
+        </div>
+        <span class="badge">🏖️ 집중 모드</span>
+      </div>
+
+      <div class="timer-tabs" role="tablist" aria-label="타이머 모드 선택">
+        <button class="tab active" data-timer-tab="normal">일반 타이머</button>
+        <button class="tab" data-timer-tab="pomodoro">포모도로</button>
+      </div>
+
+      <div class="timer-display" aria-live="polite">
+        <div class="timer-ring">
+          <span id="timerDisplay">25:00</span>
+        </div>
+        <p id="timerModeText">일반 타이머</p>
+      </div>
+
+      <div class="timer-panel active" id="normalTimerPanel">
+        <label class="input-label" for="normalMinutes">시간 설정</label>
+        <div class="time-input-row">
+          <input type="number" id="normalMinutes" min="1" max="180" value="25" />
+          <span>분</span>
+        </div>
+      </div>
+
+      <div class="timer-panel" id="pomodoroPanel">
+        <div class="pomodoro-grid">
+          <label>집중 <input type="number" id="focusMinutes" min="1" value="25" /></label>
+          <label>짧은 휴식 <input type="number" id="shortBreakMinutes" min="1" value="5" /></label>
+          <label>긴 휴식 <input type="number" id="longBreakMinutes" min="1" value="15" /></label>
+        </div>
+        <p class="muted">4번 집중하면 긴 휴식으로 전환됩니다.</p>
+      </div>
+
+      <div class="button-row">
+        <button class="primary" id="startTimerBtn">시작</button>
+        <button class="secondary" id="pauseTimerBtn">일시정지</button>
+        <button class="ghost" id="resetTimerBtn">초기화</button>
+      </div>
+      <button class="link-button" id="nextPomodoroBtn">포모도로 다음 단계로 넘기기</button>
+      <p class="pomodoro-count" id="pomodoroCount">완료한 포모도로: 0회</p>
+    </section>
+
+    <section class="card notes-card">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">Study Notes</p>
+          <h2>학습 노트 및 메모</h2>
+        </div>
+        <span class="badge">📝 기록하기</span>
+      </div>
+
+      <div class="note-tabs" role="tablist" aria-label="메모 종류 선택">
+        <button class="tab active" data-note-tab="plain">학습 노트</button>
+        <button class="tab" data-note-tab="code">코드 메모</button>
+        <button class="tab" data-note-tab="markdown">마크다운</button>
+      </div>
+
+      <div class="note-panel active" id="plainPanel">
+        <input type="text" id="plainTitle" placeholder="노트 제목" />
+        <textarea id="plainContent" placeholder="오늘 배운 내용, 해야 할 일, 복습 내용을 적어보세요."></textarea>
+        <button class="primary full" id="savePlainBtn">학습 노트 저장</button>
+      </div>
+
+      <div class="note-panel" id="codePanel">
+        <input type="text" id="codeTitle" placeholder="코드 메모 제목" />
+        <select id="codeLanguage">
+          <option value="html">HTML</option>
+          <option value="css">CSS</option>
+          <option value="javascript">JavaScript</option>
+          <option value="python">Python</option>
+          <option value="etc">기타</option>
+        </select>
+        <textarea id="codeContent" class="code-editor" spellcheck="false" placeholder="여기에 코드를 작성하세요."></textarea>
+        <button class="primary full" id="saveCodeBtn">코드 메모 저장</button>
+      </div>
+
+      <div class="note-panel" id="markdownPanel">
+        <input type="text" id="markdownTitle" placeholder="마크다운 제목" />
+        <div class="markdown-wrap">
+          <textarea id="markdownContent" placeholder="# 오늘 공부한 내용&#10;- DOM 조작&#10;- 이벤트 처리&#10;&#10;`addEventListener()` 복습"></textarea>
+          <div class="markdown-preview" id="markdownPreview">마크다운 미리보기가 여기에 표시됩니다.</div>
+        </div>
+        <button class="primary full" id="saveMarkdownBtn">마크다운 메모 저장</button>
+      </div>
+    </section>
+
+    <section class="card gallery-card">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">Image Gallery</p>
+          <h2>이미지 첨부 갤러리</h2>
+        </div>
+        <span class="badge">📷 자료 모음</span>
+      </div>
+
+      <label class="upload-box" for="imageInput">
+        <input type="file" id="imageInput" accept="image/*" multiple />
+        <span>🏝️ 이미지 첨부하기</span>
+        <small>필기 사진, 참고 이미지, 캡처 자료를 넣어보세요.</small>
+      </label>
+
+      <div class="gallery-grid" id="galleryGrid"></div>
+    </section>
+
+    <section class="card goals-card">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">Daily Goal</p>
+          <h2>오늘의 학습 목표</h2>
+        </div>
+        <span class="badge">☀️ 목표</span>
+      </div>
+      <textarea id="dailyGoal" placeholder="오늘 꼭 끝내고 싶은 공부 목표를 적어보세요."></textarea>
+      <button class="secondary full" id="saveGoalBtn">목표 저장</button>
+    </section>
+
+    <section class="card saved-card">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">Saved Notes</p>
+          <h2>저장된 메모</h2>
+        </div>
+        <button class="danger-outline" id="clearAllBtn">전체 삭제</button>
+      </div>
+      <div class="saved-list" id="savedList"></div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>🌊 시원한 여름 분위기에서 꾸준히 공부해요.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
